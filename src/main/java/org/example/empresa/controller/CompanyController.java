@@ -1,11 +1,11 @@
 package org.example.empresa.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.empresa.domain.Company;
 import org.example.empresa.dto.CompanyDTO;
 import org.example.empresa.exception.BadRequestException;
 import org.example.empresa.interfaces.ICompanyService;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,12 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/company")
+@RequiredArgsConstructor
 public class CompanyController {
     private final ICompanyService companyService;
-
-    public CompanyController(ICompanyService companyService) {
-        this.companyService = companyService;
-    }
 
     @GetMapping
     public ResponseEntity<List<Company>> getCompanies() {

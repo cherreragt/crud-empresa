@@ -1,5 +1,6 @@
 package org.example.empresa.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.empresa.domain.Company;
 import org.example.empresa.dto.CompanyDTO;
 import org.example.empresa.exception.BadRequestException;
@@ -14,12 +15,9 @@ import org.springframework.validation.BindingResult;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyService implements ICompanyService {
     private final CompanyRepository companyRepository;
-
-    public CompanyService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
 
     @Override
     public List<Company> getCompanies() {

@@ -3,9 +3,17 @@ package org.example.empresa.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.empresa.domain.Company;
 import org.springframework.beans.BeanUtils;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CompanyDTO{
     private Long id;
 
@@ -28,37 +36,5 @@ public class CompanyDTO{
         var company = new Company();
         BeanUtils.copyProperties(this, company);
         return company;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIssuer() {
-        return issuer;
-    }
-
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }
