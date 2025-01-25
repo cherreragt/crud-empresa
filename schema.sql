@@ -1,3 +1,4 @@
+# en caso usar una db ya instalada ejecutar CREATE DATABASE db;
 use db;
 
 CREATE TABLE empresa (
