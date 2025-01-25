@@ -41,3 +41,13 @@ Al proyecto se adjunta el postman collection y swagger.
 
 
 
+
+Secuencias:
+
+![image](https://github.com/user-attachments/assets/19157569-3520-4517-8bcd-7a1b78739ba0)
+![image](https://github.com/user-attachments/assets/3c84165c-94b7-40a3-9c31-a557a4db7664)
+![image](https://github.com/user-attachments/assets/6159d4a9-3c7b-42c2-91b3-c07d6fd4c472)
+![image](https://github.com/user-attachments/assets/c4598bcd-4998-4db5-bd26-e30e86d81853)
+
+
+
