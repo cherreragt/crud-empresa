@@ -50,7 +50,9 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             JWTVerifier verifier = JWT.require(algorithm).build();
 
             DecodedJWT decodedJWT = verifier.verify(token);
-            Collection<? extends GrantedAuthority> roles = List.of(new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class).readValue(decodedJWT.getClaim("authorities").asString().getBytes(), SimpleGrantedAuthority[].class));
+            Collection<? extends GrantedAuthority> roles = List.of(
+                    new ObjectMapper().addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityJsonCreator.class).readValue(decodedJWT.getClaim("authorities").asString().getBytes(), SimpleGrantedAuthority[].class)
+            );
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(decodedJWT.getSubject(), null, roles);
             SecurityContextHolder.getContext().setAuthentication(authentication);
