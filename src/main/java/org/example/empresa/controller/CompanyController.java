@@ -52,10 +52,8 @@ public class CompanyController {
 
     @PostMapping(consumes = {
             MediaType.MULTIPART_FORM_DATA_VALUE,
-            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            MediaType.APPLICATION_JSON_VALUE
     }, path = "/batch")
-    public ResponseEntity<Void> batchCreateCompanies(@NotNull @RequestParam("file")  MultipartFile file) {
+    public ResponseEntity<Void> batchCreateCompanies(@RequestParam("file")  MultipartFile file) {
         companyService.batchCreateCompanies(file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
