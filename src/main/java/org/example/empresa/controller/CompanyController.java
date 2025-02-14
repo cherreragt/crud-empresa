@@ -1,15 +1,18 @@
 package org.example.empresa.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.empresa.domain.Company;
 import org.example.empresa.dto.CompanyDTO;
 import org.example.empresa.exception.BadRequestException;
 import org.example.empresa.interfaces.ICompanyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,5 +48,15 @@ public class CompanyController {
     public ResponseEntity<Company> updateCompany(@Valid @RequestBody CompanyDTO companyDTO, BindingResult result) {
         var company = companyService.updateCompany(companyDTO, result);
         return ResponseEntity.status(HttpStatus.CREATED).body(company);
+    }
+
+    @PostMapping(consumes = {
+            MediaType.MULTIPART_FORM_DATA_VALUE,
+            MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            MediaType.APPLICATION_JSON_VALUE
+    }, path = "/batch")
+    public ResponseEntity<Void> batchCreateCompanies(@NotNull @RequestParam("file")  MultipartFile file) {
+        companyService.batchCreateCompanies(file);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

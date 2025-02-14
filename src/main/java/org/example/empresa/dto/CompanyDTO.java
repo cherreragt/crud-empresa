@@ -10,31 +10,30 @@ import lombok.Setter;
 import org.example.empresa.domain.Company;
 import org.springframework.beans.BeanUtils;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyDTO{
     private Long id;
-
     @NotBlank(message = "name no debe ser nulo")
     @NotEmpty(message = "name no debe ser nulo")
-    @Size(max = 80)
+    @Size(max = 255)
     private String name;
 
-    @NotBlank(message = "issuer no debe ser nulo")
-    @NotEmpty(message = "issuer no debe ser nulo")
-    @Size(max = 32)
-    private String issuer;
+    @NotBlank(message = "country no debe ser nulo")
+    @NotEmpty(message = "country no debe ser nulo")
+    @Size(max = 100)
+    private String country;
 
-    @NotBlank(message = "address no debe ser nulo")
-    @NotEmpty(message = "address no debe ser nulo")
-    @Size(max = 150)
-    private String  address;
+    private List<BranchDTO> branches;
 
     public Company toCompany() {
         var company = new Company();
-        BeanUtils.copyProperties(this, company);
+        this.id = null;
+        BeanUtils.copyProperties(this, company, "branches");
         return company;
     }
 }

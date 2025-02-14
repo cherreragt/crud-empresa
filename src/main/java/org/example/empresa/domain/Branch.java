@@ -1,5 +1,6 @@
 package org.example.empresa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "company")
-public class Company {
+@Table(name = "branch")
+public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,6 +22,12 @@ public class Company {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "country")
-    private String  country;
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "company_id")
+    private Long companyId; // Para evitar queries innecesarias con el mapeo de JPA, así evitar gastos en entorno serverless
 }
