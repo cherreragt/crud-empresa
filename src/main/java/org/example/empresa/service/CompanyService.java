@@ -2,6 +2,8 @@ package org.example.empresa.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.example.empresa.domain.Company;
@@ -98,10 +100,16 @@ public class CompanyService implements ICompanyService {
         }
 
         // Podría ser reemplazado por un proceso batch/cola para hacerlo en segundo plano y el servicio no se vea afectado, pero no lo hago por cuestiones de tiempo
-        try {
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             var om = new ObjectMapper();
             var root = om.readValue(file.getInputStream(), CompanyRoot.class);
             var companyDTO = root.getCompany();
+
+            var validator = factory.getValidator();
+            var companyErrors = validator.validate(companyDTO);
+            if (!companyErrors.isEmpty()) {
+                throw new BadRequestException(companyErrors.stream().toList().get(0).getMessage());
+            }
 
             var getCompany = companyRepository.findByName(companyDTO.getName());
             if (getCompany.isPresent()) {
@@ -114,8 +122,14 @@ public class CompanyService implements ICompanyService {
                 if (getBranch.isPresent()) {
                     throw new ConflictException("El nombre de la sucursal ya esta registrado");
                 }
+                branchDTO.setCompanyId(company.getId());
+
+                var branchErrors = validator.validate(branchDTO);
+                if (!branchErrors.isEmpty()) {
+                    throw new BadRequestException(branchErrors.stream().toList().get(0).getMessage());
+                }
+
                 var branch = branchDTO.toBranch();
-                branch.setCompanyId(company.getId());
                 branch = this.branchRepository.save(branch);
 
                 for (var collaboratorDTO: branchDTO.getCollaborators()) {
@@ -123,8 +137,14 @@ public class CompanyService implements ICompanyService {
                     if (getCollaborator.isPresent()) {
                         throw new ConflictException("El CUI del colaborador: ".concat(collaboratorDTO.getCUI()).concat(" ya esta registrado"));
                     }
+                    collaboratorDTO.setBranchId(branch.getId());
+
+                    var collaboratorErrors = validator.validate(collaboratorDTO);
+                    if (!collaboratorErrors.isEmpty()) {
+                        throw new BadRequestException(collaboratorErrors.stream().toList().get(0).getMessage());
+                    }
+
                     var collaborator = collaboratorDTO.toCollaborator();
-                    collaborator.setBranchId(branch.getId());
                     this.collaboratorRepository.save(collaborator);
                 }
             }

@@ -21,10 +21,10 @@ public class CollaboratorDTO {
     @NotBlank(message = "Name no puede estar vacio")
     private String name;
 
-    @Size(min = 13, max = 15, message = "Phone debe tener entre 13 y 15 caracteres")
+    @Size(min = 13, max = 15, message = "CUI debe tener entre 13 y 15 caracteres")
     @NotEmpty(message = "CUI es requerido")
     @NotBlank(message = "CUI no puede estar vacio")
-    @JsonProperty("CUI")
+    @JsonProperty("cui")
     private String CUI;
 
     @NotNull(message = "BranchId es requerido")
