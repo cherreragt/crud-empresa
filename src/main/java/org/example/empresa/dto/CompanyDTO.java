@@ -32,7 +32,6 @@ public class CompanyDTO{
 
     public Company toCompany() {
         var company = new Company();
-        this.id = null;
         BeanUtils.copyProperties(this, company, "branches");
         return company;
     }

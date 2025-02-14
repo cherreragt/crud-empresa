@@ -41,8 +41,6 @@ public class BranchDTO {
 
     public Branch toBranch() {
         var branch = new Branch();
-        // this.id = null;
-        // this.companyId = null;
         BeanUtils.copyProperties(this, branch, "collaborators");
         return branch;
     }
